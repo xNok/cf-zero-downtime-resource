@@ -1,0 +1,12 @@
+{
+  "source": {
+    "api": "",
+    "username": "",
+    "password": "",
+    "organization": null,
+    "space": null
+  },
+  "params": {
+    "name": "cf-blue-green-resource-test-blue"
+  }
+}

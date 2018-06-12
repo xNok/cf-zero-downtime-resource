@@ -1,0 +1,7 @@
+applications:
+  - name: cf-zero-downtime-test
+    buildpack: staticfile_buildpack
+    env:
+      FORCE_HTTPS: true
+      TEST: This is a test
+    memory: 64M

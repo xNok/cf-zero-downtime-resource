@@ -1,0 +1,30 @@
+{
+  "name": "cf-zero-downtime-resource",
+  "version": "1.0.0",
+  "description": "Concourse resource for zero-downtime application deployment on CloudFoundry",
+  "private": true,
+  "main": "index.js",
+  "bin": {
+    "check": "./check.js",
+    "in": "./in.js",
+    "out": "./out.js"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "concourse",
+    "cloudfoundry",
+    "zero-downtime",
+    "blue-green"
+  ],
+  "author": "Transfodev",
+  "license": "MIT",
+  "dependencies": {
+    "get-stdin": "^6.0.0",
+    "js-yaml": "^3.12.0",
+    "node-glob": "^1.2.0",
+    "shelljs": "^0.8.2",
+    "validator": "^10.3.0"
+  }
+}

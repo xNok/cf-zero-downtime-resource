@@ -1,0 +1,17 @@
+{
+  "source": {
+    "api": "",
+    "username": "",
+    "password": "",
+    "organization": null,
+    "space": null
+  },
+  "params": {
+    "name": "cf-zero-downtime-test",
+    "path": "../tests/app-good",
+    "manifest": "../tests/manifest.yml",
+    "environment_variables": {
+      "TEST": "This is a test"
+    }
+  }
+}
