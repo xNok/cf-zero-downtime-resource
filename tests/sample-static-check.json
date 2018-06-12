@@ -7,6 +7,6 @@
     "space": null
   },
   "params": {
-    "name": "cf-blue-green-resource-test-blue"
+    "name": "cf-zero-downtime-test"
   }
 }

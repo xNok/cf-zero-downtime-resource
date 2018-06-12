@@ -8,8 +8,8 @@
   },
   "params": {
     "name": "cf-zero-downtime-test",
-    "path": "../tests/app-good",
-    "manifest": "../tests/manifest.yml",
+    "path": "app-good",
+    "manifest": "manifest-static.yml",
     "environment_variables": {
       "TEST": "This is a test"
     }
