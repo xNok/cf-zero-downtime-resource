@@ -23,7 +23,7 @@ It is strongly recommended to user `health-check-type: http` and `health-check-h
     - **client_id**: *required* client id to authenticate
     - **client_secret**: *required* client secret to authenticate
 - **organization** : *required* the name of the organization to push to
-- **space** : *required** the name of the space to push to
+- **space** : *required* the name of the space to push to
 - **skip_cert_check** : *optional* (`true` or `false`) skip TLS certificate validation (default: `false`)
 - **verbose** : optional (`true` or `false`) make `cf` CLI more verbose using `CF_TRACE=true` (default: `false`)
 
