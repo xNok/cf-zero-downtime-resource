@@ -5,7 +5,7 @@ image_resource:
         repository: alpine/git
         tag: latest
 inputs:
-- name: cf-zero-downtime-source
+- name: cf-zero-downtime-resource-source
 
 outputs:
 - name: version
@@ -15,5 +15,5 @@ run:
     args:
     - -exc
     - |
-      cd cf-zero-downtime-source
+      cd cf-zero-downtime-resource-source
       ci/tasks/version.sh > ../version/version
