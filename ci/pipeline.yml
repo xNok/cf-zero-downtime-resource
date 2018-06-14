@@ -1,0 +1,33 @@
+resource_types: 
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+    tag: latest
+
+resources:
+- name: cf-zero-downtime-resource-source
+  type: git
+  source: 
+    uri: https://github.com/emerald-squad/cf-zero-downtime-resource.git
+    branch: 'master'
+
+- name: docker-hub
+  type: docker-image
+  source:
+    repository: emeraldsquad/cf-zero-downtime-resource
+    username: ((docker-hub-username))
+    password: ((docker-hub-password))
+
+jobs:
+- name: publish
+  plan:
+  - get: cf-zero-downtime-resource-source
+    trigger: true
+  - task: get-version
+    file: cf-zero-downtime-resource-source/ci/tasks/get-version.yml
+  - put: docker-hub
+    params:
+      build: cf-zero-downtime-resource-source
+      tag: version/version
+      tag_as_latest: true
