@@ -14,9 +14,6 @@ cat <<JSON | ${DIR}/../in.js ${DIR}
   },
   "version": {
     "guid": "${guid}"
-  },
-  "params": {
-    "name": "cf-zero-downtime-test"
   }
 }
 JSON
