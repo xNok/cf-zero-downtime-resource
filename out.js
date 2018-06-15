@@ -128,7 +128,7 @@ async function cmd() {
         { name: "buildpack", value: appInfo.entity.buildpack },
         { name: "space", value: request.source.space },
         { name: "organization", value: request.source.organization },
-        { name: "memory", value: appInfo.entity.memory },
+        { name: "memory", value: `${appInfo.entity.memory}` },
         { name: "package_updated_at", value: appInfo.entity.package_updated_at }
       ]
     })
