@@ -20,14 +20,14 @@ async function cmd() {
 
     const result = {
       version: appInfo.metadata,
-      metadata: {
-        name: appInfo.entity.name,
-        buildpack: appInfo.entity.buildpack,
-        space: request.source.space,
-        organization: request.source.organization,
-        memory: appInfo.entity.memory,
-        package_updated_at: appInfo.entity.package_updated_at
-      }
+      metadata: [
+        { name: "name", value: appInfo.entity.name },
+        { name: "buildpack", value: appInfo.entity.buildpack },
+        { name: "space", value: request.source.space },
+        { name: "organization", value: request.source.organization },
+        { name: "memory", value: appInfo.entity.memory },
+        { name: "package_updated_at", value: appInfo.entity.package_updated_at }
+      ]
     }
 
     concourse.response(result)
