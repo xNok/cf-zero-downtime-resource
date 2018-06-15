@@ -62,12 +62,14 @@ exports.target = ({ organization, space }) => {
   }
 }
 
-exports.appInfo = ({ name }) => {
+exports.appInfo = ({ name, guid }) => {
   try {
-    const guid = child_process
-      .execFileSync("cf", ["app", "--guid", name])
-      .toString()
-      .trim()
+    guid =
+      guid ||
+      child_process
+        .execFileSync("cf", ["app", "--guid", name])
+        .toString()
+        .trim()
 
     const appInfo = child_process
       .execFileSync("cf", ["curl", `/v2/apps/${guid}`])

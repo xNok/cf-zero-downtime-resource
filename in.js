@@ -15,7 +15,10 @@ async function cmd() {
     cf.auth(request.source)
     cf.target(request.source)
 
-    const appInfo = cf.appInfo(request.params)
+    const appInfo = cf.appInfo({
+      name: request.params.name,
+      guid: request.version.guid
+    })
     fs.writeFileSync("app.info", JSON.stringify(appInfo, null, 2))
 
     const result = {
