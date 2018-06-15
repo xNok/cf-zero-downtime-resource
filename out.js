@@ -70,7 +70,6 @@ async function cmd() {
     let manifest = yaml.safeLoad(
       fs.readFileSync(request.params.manifest, "utf8")
     )
-    console.log("original manifest:", manifest.applications)
 
     validateManifest(manifest)
 
@@ -91,7 +90,6 @@ async function cmd() {
       env: request.params.environment_variables
     })
 
-    console.log("updated manifest:", JSON.stringify(manifest, null, 2))
     fs.writeFileSync("manifest.yml", yaml.safeDump(manifest))
 
     cf.auth(request.source)
