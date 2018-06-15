@@ -30,15 +30,28 @@ It is strongly recommended to user `health-check-type: http` and `health-check-h
 - **skip_cert_check** : _optional_ (`true` or `false`) skip TLS certificate validation (default: `false`)
 - **verbose** : optional (`true` or `false`) make `cf` CLI more verbose using `CF_TRACE=true` (default: `false`)
 
+## check
+
+Get the deployed app metadata. Only one version is ever returned.
+
+ex:
+
+```
+[
+  {
+    "guid": "5bac9193-ab1a-4f7c-9761-cb082b4068f1",
+    "url": "/v2/apps/5bac9193-ab1a-4f7c-9761-cb082b4068f1",
+    "created_at": "2018-06-15T18:15:30Z",
+    "updated_at": "2018-06-15T18:15:37Z"
+  }
+]
+```
+
 ## in
 
 Read in app information into app.json (equivalent to `cf curl /v2/apps/$(cf app NAME --guid)`)
 
-version is not taken into account as it is not meaningful in the context of an app running in CF.
-
-### params
-
-- **name**: The name of the app
+Only the `guid` attribute in the passed in version is taken into account.
 
 ## out
 
