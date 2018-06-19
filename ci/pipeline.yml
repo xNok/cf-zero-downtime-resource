@@ -35,7 +35,7 @@ jobs:
     trigger: true
   - put: version
     params:
-      bump: minor
+      bump: patch
   - put: docker-hub
     params:
       build: cf-zero-downtime-resource-source
