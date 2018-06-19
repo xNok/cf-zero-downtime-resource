@@ -23,7 +23,7 @@ resources:
   type: semver
   source: 
     driver: git
-    uri: https://github.com/emerald-squad/cf-zero-downtime-resource.git
+    uri: git@github.com:emerald-squad/cf-zero-downtime-resource.git
     branch: 'version'
     file: version
     private_key: ((github-key))
