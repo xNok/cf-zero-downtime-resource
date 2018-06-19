@@ -121,15 +121,11 @@ exports.push = ({ name, path, manifest, docker_password }) => {
       manifest,
       "-p",
       path,
-      { env }
+      { env, stdio: [null, process.stderr, process.stderr] }
     ])
     console.log(`CF: Application ${name} successfully deployed!`)
   } catch (e) {
-    throw new Error(
-      `CF: Unable to deploy ${name}:${os.EOL}${result.stdout}${os.EOL}${
-        result.stderr
-      }`
-    )
+    throw new Error(`CF: Unable to deploy ${name}!`)
   }
 }
 

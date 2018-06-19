@@ -1,0 +1,15 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Simple app to test cf-zero-downtime-resource",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "emerald-squad",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
