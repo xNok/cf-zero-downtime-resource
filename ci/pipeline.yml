@@ -19,13 +19,23 @@ resources:
     username: ((docker-hub-username))
     password: ((docker-hub-password))
 
+- name: version
+  type: semver
+  source: 
+    driver: git
+    uri: https://github.com/emerald-squad/cf-zero-downtime-resource.git
+    branch: 'version'
+    file: version
+    private_key: ((github-key))
+
 jobs:
 - name: publish
   plan:
   - get: cf-zero-downtime-resource-source
     trigger: true
-  - task: get-version
-    file: cf-zero-downtime-resource-source/ci/tasks/get-version.yml
+  - put: version
+    params:
+      bump: minor
   - put: docker-hub
     params:
       build: cf-zero-downtime-resource-source
