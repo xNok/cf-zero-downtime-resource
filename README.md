@@ -15,6 +15,18 @@ The health check of the newly deployed application is based on the manifest `hea
 
 It is strongly recommended to user `health-check-type: http` and `health-check-http-endpoint` to specify a health check route if your application uses http.
 
+## resource_types
+
+```
+- name: cf-zero-downtime-resource
+  type: docker-image
+  source:
+    repository: emeraldsquad/cf-zero-downtime-resource
+    tag: "0.3.2"
+```
+
+For a list of available tags, [consult our Docker Hub repo](https://hub.docker.com/r/emeraldsquad/cf-zero-downtime-resource/tags/).
+
 ## source
 
 - **api** : _required_ the api endpoint of the Cloud Foundry Cloud Controller
