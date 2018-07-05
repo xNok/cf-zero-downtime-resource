@@ -11,6 +11,8 @@ resources:
   source: 
     uri: https://github.com/emerald-squad/cf-zero-downtime-resource.git
     branch: 'master'
+    ignore_paths:
+    - README.md
 
 - name: docker-hub
   type: docker-image
