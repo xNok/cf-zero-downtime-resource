@@ -13,6 +13,7 @@ resources:
     branch: 'master'
     ignore_paths:
     - README.md
+    - pipeline.yml
 
 - name: docker-hub
   type: docker-image
