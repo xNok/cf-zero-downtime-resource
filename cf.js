@@ -121,7 +121,7 @@ exports.push = ({ name, path, manifest, docker_password, noStart = false }) => {
         name,
         "-f",
         manifest,
-        "-p",
+        path ? "-p" : null,
         path,
         noStart ? "--no-start" : null
       ].filter(a => a),
