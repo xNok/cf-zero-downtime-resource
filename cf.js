@@ -114,15 +114,11 @@ exports.push = ({ name, path, manifest, docker_password }) => {
   }
 
   try {
-    child_process.execFileSync("cf", [
-      "push",
-      name,
-      "-f",
-      manifest,
-      "-p",
-      path,
+    child_process.execFileSync(
+      "cf",
+      ["push", name, "-f", manifest, "-p", path],
       { env, stdio: [null, process.stderr, process.stderr] }
-    ])
+    )
     console.log(`CF: Application ${name} successfully deployed!`)
   } catch (e) {
     throw new Error(`CF: Unable to deploy ${name}!`)

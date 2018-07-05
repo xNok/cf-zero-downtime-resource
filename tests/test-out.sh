@@ -3,7 +3,12 @@ set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-cat <<JSON | ${DIR}/../out.js ${DIR}
+# this function allows us to see the stderr output in red. Make it easy to see if 
+color()(set -o pipefail;"$@" 2>&1>&3|sed $'s,.*,\e[31m&\e[m,'>&2)3>&1
+
+echo "test successful app deploy"
+
+cat <<JSON | color ${DIR}/../out.js ${DIR}
 {
   "source": {
     "api": "",
@@ -23,7 +28,9 @@ cat <<JSON | ${DIR}/../out.js ${DIR}
 }
 JSON
 
-cat <<JSON | ${DIR}/../out.js ${DIR} && exit 1 || echo "passed"
+echo -e "\n\n testing failed app deploy"
+
+cat <<JSON | color ${DIR}/../out.js ${DIR} && exit 1 || echo "passed"
 {
   "source": {
     "api": "",
