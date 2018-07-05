@@ -73,16 +73,14 @@ async function cmd() {
 
     validateManifest(manifest)
 
-    if (manifest.docker && request.params.path) {
+    const isDocker = typeof manifest.applications[0].docker !== "undefined"
+    if (isDocker && request.params.path) {
       console.log(
         "WARNING: Manifest specify a docker image. path parameter will be ignored!"
       )
     }
 
-    let path = null
-    if (!manifest.docker) {
-      path = validatePath(request.params.path)
-    }
+    let path = isDocker ? null : validatePath(request.params.path)
 
     manifest = editManifest({
       manifest,
