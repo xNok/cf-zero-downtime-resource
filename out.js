@@ -98,12 +98,27 @@ async function cmd() {
     cf.delete({ name: venerable })
     cf.rename({ from: request.params.name, to: venerable, failOnError: false })
     try {
-      cf.push({
-        name: request.params.name,
-        path: path,
-        manifest: "manifest.yml",
-        docker_password: request.params.docker_password
-      })
+      if (request.params.services) {
+        cf.push({
+          name: request.params.name,
+          path: path,
+          manifest: "manifest.yml",
+          docker_password: request.params.docker_password,
+          noStart: true
+        })
+        cf.bindServices({
+          name: request.params.name,
+          services: request.params.services
+        })
+        cf.start({ name: request.params.name })
+      } else {
+        cf.push({
+          name: request.params.name,
+          path: path,
+          manifest: "manifest.yml",
+          docker_password: request.params.docker_password
+        })
+      }
       cf.stop({ name: venerable })
     } catch (e) {
       console.error("Unable to push application to CF. Reverting...", e)

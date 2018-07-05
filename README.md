@@ -79,3 +79,29 @@ If the push failed, the failed app will be stopped and renamed with the **-faile
 - **environment_variables** : _optional_ a set of environment variable to set in the manifest file before pushing the app. They will take precedence over any environment variables present.
 - **docker_username** : _optional_ used to authenticate to private docker registry when pushing docker image.
 - **docker_password** : _optional_ used to authenticate to private docker registry when pushing docker image.
+
+For service binding that requires configuration, you can also specify:
+
+- **services**: _optional_ array of additional service bindings that cannot be expressed in the manifest (services that requires a configuration object)
+  - **name**: _required_ name of the service to bind to
+  - **config**: _required_ configuration object to pass to `bind-service`
+
+Ex:
+
+```yaml
+jobs:
+- name: deploy
+  plan:
+  - get: my-app-package
+  - put: cf-zero-downtime
+      name: my-app
+      manifest: my-app-package/manifest.yml
+      path: my-app-package/my-app.jar
+      services:
+      - name: my-service
+        config:
+          share: my-share
+          mount: /home/my-app/data
+          uid: "1000"
+          gid: "1000"
+```

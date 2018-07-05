@@ -106,7 +106,7 @@ exports.rename = ({ from, to, failOnError = true }) => {
   }
 }
 
-exports.push = ({ name, path, manifest, docker_password }) => {
+exports.push = ({ name, path, manifest, docker_password, noStart = false }) => {
   console.log(`CF: Deploying ${name}...`)
   const env = { ...process.env }
   if (docker_password) {
@@ -116,13 +116,51 @@ exports.push = ({ name, path, manifest, docker_password }) => {
   try {
     child_process.execFileSync(
       "cf",
-      ["push", name, "-f", manifest, "-p", path],
+      [
+        "push",
+        name,
+        "-f",
+        manifest,
+        "-p",
+        path,
+        noStart ? "--no-start" : null
+      ].filter(a => a),
       { env, stdio: [null, process.stderr, process.stderr] }
     )
     console.log(`CF: Application ${name} successfully deployed!`)
   } catch (e) {
     throw new Error(`CF: Unable to deploy ${name}!`)
   }
+}
+
+exports.start = ({ name }) => {
+  console.log(`CF: Starting ${name}...`)
+  try {
+    child_process.execFileSync("cf", ["start", name], {
+      stdio: [null, process.stderr, process.stderr]
+    })
+    console.log(`CF: Application ${name} successfully started!`)
+  } catch (e) {
+    throw new Error(`CF: Unable to start ${name}!`)
+  }
+}
+
+exports.bindServices = ({ name, services = [] }) => {
+  services.forEach(service => {
+    console.log(`CF: Binding service ${service.name} to ${name}`)
+    if (typeof service.config != "object") {
+      throw new Error(
+        "CF: Service configuration MUST be provided for ${service.name}"
+      )
+    }
+
+    const config = JSON.stringify(service.config)
+    child_process.execFileSync(
+      "cf",
+      ["bind-service", name, service.name, "-c", config],
+      { stdio: [null, process.stderr, process.stderr] }
+    )
+  })
 }
 
 exports.log = ({ name }) => {
