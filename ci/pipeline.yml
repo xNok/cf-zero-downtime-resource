@@ -13,6 +13,7 @@ resources:
     branch: 'master'
     ignore_paths:
     - README.md
+    - VERSION
     - ci/pipeline.yml
 
 - name: docker-hub
@@ -27,8 +28,8 @@ resources:
   source: 
     driver: git
     uri: git@github.com:emerald-squad/cf-zero-downtime-resource.git
-    branch: 'version'
-    file: version
+    branch: 'master'
+    file: VERSION
     private_key: ((github-key))
 
 jobs:
@@ -42,5 +43,5 @@ jobs:
   - put: docker-hub
     params:
       build: cf-zero-downtime-resource-source
-      tag: version/version
+      tag: version/VERSION
       tag_as_latest: true
