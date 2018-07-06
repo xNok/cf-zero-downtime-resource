@@ -67,9 +67,10 @@ async function cmd() {
 
     const venerable = `${request.params.name}-venerable`
 
-    let manifest = yaml.safeLoad(
-      fs.readFileSync(request.params.manifest, "utf8")
-    )
+    let manifest =
+      typeof request.params.manifest === "string"
+        ? yaml.safeLoad(fs.readFileSync(request.params.manifest, "utf8"))
+        : request.params.manifest
 
     validateManifest(manifest)
 

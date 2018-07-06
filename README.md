@@ -74,7 +74,7 @@ If the push failed, the failed app will be stopped and renamed with the **-faile
 ### params
 
 - **name** : _required_ name of the app to push
-- **manifest** : _required_ manifest of the app to push. The _path_ element inside the manifest will be ignored. The manifest must have only **one** application and it must be present under the `applications` key.
+- **manifest** : _required_ manifest of the app to push. The _path_ element inside the manifest will be ignored. The manifest must have only **one** application and it must be present under the `applications` key. The manifest can also be specified **inline**, see [bellow for an example](#inline-manifest).
 - **path** : _required (except for docker images)_ path for the app bits to deploy. a Glob can be specified, but it must resolve to only one path. If multiple paths match the blob, the deploy will fail (before any interaction with CF)
 - **environment_variables** : _optional_ a set of environment variable to set in the manifest file before pushing the app. They will take precedence over any environment variables present.
 - **docker_username** : _optional_ used to authenticate to private docker registry when pushing docker image.
@@ -86,7 +86,7 @@ For service binding that requires configuration, you can also specify:
   - **name**: _required_ name of the service to bind to
   - **config**: _required_ configuration object to pass to `bind-service`
 
-Ex:
+Example:
 
 ```yaml
 jobs:
@@ -104,4 +104,27 @@ jobs:
           mount: /home/my-app/data
           uid: "1000"
           gid: "1000"
+```
+
+#### Inline Manifest
+
+Instead of providing a path to the manifest file, you can inline the manifest directly in the pipeline.
+
+Example:
+
+```yaml
+jobs:
+- name: deploy
+  plan:
+  - get: my-app-dist
+  - put: cf-zero-downtime
+      name: my-app
+      path: my-app-dist
+      manifest:
+        applications:
+        - name: my-app
+          buildpack: nodejs_buildpack
+          memory: 64M
+          health-check-type: http
+          health-check-http-endpoint: /good
 ```
