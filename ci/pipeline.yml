@@ -43,5 +43,5 @@ jobs:
   - put: docker-hub
     params:
       build: cf-zero-downtime-resource-source
-      tag: version/VERSION
+      tag: version/version
       tag_as_latest: true
