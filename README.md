@@ -22,7 +22,7 @@ It is strongly recommended to user `health-check-type: http` and `health-check-h
   type: docker-image
   source:
     repository: emeraldsquad/cf-zero-downtime-resource
-    tag: "0.3.2"
+    tag: "0.5.2"
 ```
 
 For a list of available tags, [consult our Docker Hub repo](https://hub.docker.com/r/emeraldsquad/cf-zero-downtime-resource/tags/).
