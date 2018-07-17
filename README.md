@@ -39,8 +39,8 @@ For a list of available tags, [consult our Docker Hub repo](https://hub.docker.c
     - **client_secret**: _required_ client secret to authenticate
 - **organization** : _required_ the name of the organization to push to
 - **space** : _required_ the name of the space to push to
-- **skip_cert_check** : _optional_ (`true` or `false`) skip TLS certificate validation (default: `false`)
-- **verbose** : optional (`true` or `false`) make `cf` CLI more verbose using `CF_TRACE=true` (default: `false`)
+- **skip_cert_check** : (not implemented yet) _optional_ (`true` or `false`) skip TLS certificate validation (default: `false`)
+- **verbose** : (not implemented yet) optional (`true` or `false`) make `cf` CLI more verbose using `CF_TRACE=true` (default: `false`)
 
 ## check
 
@@ -94,6 +94,7 @@ jobs:
   plan:
   - get: my-app-package
   - put: cf-zero-downtime
+    params:
       name: my-app
       manifest: my-app-package/manifest.yml
       path: my-app-package/my-app.jar
@@ -118,6 +119,7 @@ jobs:
   plan:
   - get: my-app-dist
   - put: cf-zero-downtime
+    params:
       name: my-app
       path: my-app-dist
       manifest:
