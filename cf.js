@@ -106,27 +106,34 @@ exports.rename = ({ from, to, failOnError = true }) => {
   }
 }
 
-exports.push = ({ name, path, manifest, docker_password, noStart = false }) => {
+exports.push = ({
+  name,
+  path,
+  manifest,
+  vars_files = [],
+  docker_password,
+  noStart = false
+}) => {
   console.log(`CF: Deploying ${name}...`)
   const env = { ...process.env }
   if (docker_password) {
     env["CF_DOCKER_PASSWORD"] = docker_password
   }
 
+  let cf_args = ["push", name]
+  cf_args.push("-f", manifest)
+  path && cf_args.push("-p", path)
+  noStart && cf_args.push("--no-start")
+
+  vars_files.forEach(vars_file => {
+    cf_args.push("--vars-file", vars_file)
+  })
+
   try {
-    child_process.execFileSync(
-      "cf",
-      [
-        "push",
-        name,
-        "-f",
-        manifest,
-        path ? "-p" : null,
-        path,
-        noStart ? "--no-start" : null
-      ].filter(a => a),
-      { env, stdio: [null, process.stderr, process.stderr] }
-    )
+    child_process.execFileSync("cf", cf_args, {
+      env,
+      stdio: [null, process.stderr, process.stderr]
+    })
     console.log(`CF: Application ${name} successfully deployed!`)
   } catch (e) {
     throw new Error(`CF: Unable to deploy ${name}!`)
