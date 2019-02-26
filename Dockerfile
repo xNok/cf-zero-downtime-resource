@@ -1,6 +1,6 @@
 FROM node:carbon-alpine
 
-ENV CF_CLI_VERSION=6.35.2
+ENV CF_CLI_VERSION=6.43.0
 ENV NODE_ENV=production
 
 RUN apk add --no-cache \
