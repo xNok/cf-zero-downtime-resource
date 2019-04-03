@@ -25,7 +25,7 @@ cat <<JSON | color ${DIR}/../out.js ${DIR}
         {
           "name": "cf-zero-downtime-test",
           "buildpack": "nodejs_buildpack",
-          "memory": "64M",
+          "memory": "128M",
           "health-check-type": "http",
           "health-check-http-endpoint": "/good"
         }
