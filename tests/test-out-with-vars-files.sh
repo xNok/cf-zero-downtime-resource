@@ -61,7 +61,7 @@ cat <<JSON | color ${DIR}/../out.js ${DIR}
       "file_1_var": "((file_1_var))",
       "file_2_var": "((file_2_var))"
     },
-    "vars_files": [
+    "manifest_vars_files": [
       "$TEMP_DIR/vars-file-1.yml",
       "$TEMP_DIR/vars-file-2.yml"
     ]

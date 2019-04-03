@@ -35,7 +35,7 @@ cat <<JSON | color ${DIR}/../out.js ${DIR}
     "environment_variables": {
       "random_value": "((value))"
     },
-    "vars": {
+    "manifest_vars": {
       "value": "$RAND"
     }
   }

@@ -91,9 +91,9 @@ async function cmd() {
 
     fs.writeFileSync("manifest.yml", yaml.safeDump(manifest))
 
-    const vars_files = request.params.vars_files || []
-    if (request.params.vars) {
-      fs.writeFileSync("vars.yml", yaml.safeDump(request.params.vars))
+    const vars_files = request.params.manifest_vars_files || []
+    if (request.params.manifest_vars) {
+      fs.writeFileSync("vars.yml", yaml.safeDump(request.params.manifest_vars))
       vars_files.push("vars.yml")
     }
 
@@ -139,7 +139,7 @@ async function cmd() {
       console.log("Revert successful!")
       process.exit(1)
     } finally {
-      if (request.params.vars) {
+      if (request.params.manifest_vars) {
         fs.unlinkSync("vars.yml")
       }
     }
