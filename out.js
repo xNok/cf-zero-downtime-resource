@@ -91,6 +91,12 @@ async function cmd() {
 
     fs.writeFileSync("manifest.yml", yaml.safeDump(manifest))
 
+    const vars_files = request.params.manifest_vars_files || []
+    if (request.params.manifest_vars) {
+      fs.writeFileSync("vars.yml", yaml.safeDump(request.params.manifest_vars))
+      vars_files.push("vars.yml")
+    }
+
     cf.auth(request.source)
     cf.target(request.source)
 
@@ -102,6 +108,7 @@ async function cmd() {
           name: request.params.name,
           path: path,
           manifest: "manifest.yml",
+          vars_files: vars_files,
           docker_password: request.params.docker_password,
           noStart: true
         })
@@ -115,6 +122,7 @@ async function cmd() {
           name: request.params.name,
           path: path,
           manifest: "manifest.yml",
+          vars_files: vars_files,
           docker_password: request.params.docker_password
         })
       }
@@ -130,6 +138,10 @@ async function cmd() {
       cf.rename({ from: venerable, to: request.params.name })
       console.log("Revert successful!")
       process.exit(1)
+    } finally {
+      if (request.params.manifest_vars) {
+        fs.unlinkSync("vars.yml")
+      }
     }
 
     const appInfo = cf.appInfo(request.params)
