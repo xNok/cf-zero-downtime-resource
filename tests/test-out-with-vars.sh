@@ -2,7 +2,7 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-RAND="$(< /dev/random tr -dc 'a-zA-Z0-9' | head -c 32)"
+RAND="$(< /dev/urandom tr -dc 'a-zA-Z0-9' | head -c 32)"
 
 echo "test: should start app with inline manifest, substituting variables"
 
