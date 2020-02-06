@@ -1,7 +1,9 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-guid=`cf app cf-zero-downtime-test --guid`
+APP_NAME=${APP_NAME:-cf-zero-downtime-test}
+
+guid=`cf app $APP_NAME --guid`
 
 cat <<JSON | ${DIR}/../in.js ${DIR}
 {
@@ -10,7 +12,8 @@ cat <<JSON | ${DIR}/../in.js ${DIR}
     "username": "",
     "password": "",
     "organization": null,
-    "space": null
+    "space": null,
+    "cf_metadata": true
   },
   "version": {
     "guid": "${guid}"

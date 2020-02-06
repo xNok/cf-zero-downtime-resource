@@ -39,6 +39,7 @@ For a list of available tags, [consult our Docker Hub repo](https://hub.docker.c
     - **client_secret**: _required_ client secret to authenticate
 - **organization** : _required_ the name of the organization to push to
 - **space** : _required_ the name of the space to push to
+- **cf_metadata**: (optional) if `true` collect the metadata from PCF and display them in Concouse metadata ([see](https://docs.pivotal.io/pivotalcf/2-6/adminguide/metadata.html))
 - **skip_cert_check** : (not implemented yet) _optional_ (`true` or `false`) skip TLS certificate validation (default: `false`)
 - **verbose** : (not implemented yet) optional (`true` or `false`) make `cf` CLI more verbose using `CF_TRACE=true` (default: `false`)
 

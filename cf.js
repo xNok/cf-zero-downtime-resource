@@ -81,6 +81,25 @@ exports.appInfo = ({ name, guid }) => {
   }
 }
 
+exports.appMetadata = ({ name, guid }) => {
+  try {
+    guid =
+      guid ||
+      child_process
+        .execFileSync("cf", ["app", "--guid", name])
+        .toString()
+        .trim()
+
+    const appInfo = child_process
+      .execFileSync("cf", ["curl", `/v3/apps/${guid}`])
+      .toString()
+
+    return JSON.parse(appInfo).metadata
+  } catch (e) {
+    throw new Error(`CF: Application '${name}' not found`)
+  }
+}
+
 exports.appExists = ({ name }) => {
   try {
     child_process.execFileSync("cf", ["app", "--guid", name])
