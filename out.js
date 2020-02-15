@@ -144,6 +144,13 @@ async function cmd() {
       }
     }
 
+    if ("metadata" in request.params) {
+      cf.updateAppMetadata({
+        name: request.params && request.params.name,
+        request_body_file: request.params.metadata
+      })
+    }
+
     const appInfo = cf.appInfo(request.params)
     concourse.response({
       version: appInfo.metadata,

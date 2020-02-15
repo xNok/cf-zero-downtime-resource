@@ -3,4 +3,4 @@ applications:
     buildpack: staticfile_buildpack
     env:
       FORCE_HTTPS: true
-    memory: 64M
+    memory: 128M

@@ -16,7 +16,8 @@ cat <<JSON | ${DIR}/../out.js ${DIR}
     "manifest": "manifest-static.yml",
     "environment_variables": {
       "TEST": "This is a test"
-    }
+    },
+    "metadata": "metadata-static.json"
   }
 }
 JSON

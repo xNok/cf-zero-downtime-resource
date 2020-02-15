@@ -91,12 +91,35 @@ exports.appMetadata = ({ name, guid }) => {
         .trim()
 
     const appInfo = child_process
-      .execFileSync("cf", ["curl", `/v3/apps/${guid}`])
+      .execFileSync("cf", ["curl", `v3/apps/${guid}`])
       .toString()
 
     return JSON.parse(appInfo).metadata
   } catch (e) {
     throw new Error(`CF: Application '${name}' not found`)
+  }
+}
+
+exports.updateAppMetadata = ({ name, guid, request_body_file }) => {
+  try {
+    guid =
+      guid ||
+      child_process
+        .execFileSync("cf", ["app", "--guid", name])
+        .toString()
+        .trim()
+
+  } catch (e) {
+    throw new Error(`CF: Application '${name}' not found`)
+  }
+
+  try {
+    console.log("Uploading metadatas")
+
+    child_process.execFileSync("cf", ["curl", `v3/apps/${guid}`, "-X", "PATCH", "-d", `@${request_body_file}`])
+
+  } catch (error) {
+    throw new Error(`CF: Fail to upload metadata for '${name}'`)
   }
 }
 
