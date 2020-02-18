@@ -6,6 +6,8 @@ const fs = require("fs")
 const getStdin = require("get-stdin")
 const cf = require("./cf")
 const concourse = require("./concourse")
+const replace = require("replace-in-file")
+const merge = require("deepmerge")
 
 function validateManifest(manifest) {
   if (!manifest.applications) {
@@ -56,6 +58,39 @@ function editManifest({ manifest, name, env = {}, docker_username }) {
     ...manifest,
     applications: [application]
   }
+}
+
+function prepareMatadata(params) {
+
+  if ("metadata_inline" in params) {
+    // Merge both content
+    obj1 = "metadata" in params ? JSON.parse(fs.readFileSync(params["metadata"])) : {}
+    obj2 = params["metadata_inline"]
+
+    merged = merge(obj1, obj2);
+
+    params["metadata"] = "metadatafile.json"
+    fs.writeFileSync(params["metadata"], JSON.stringify(merged))
+  }
+
+  // Interpolate metadata if needed
+  try {
+    const options = {
+      files: params["metadata"],
+      from: /"{{.+}}"/g,
+      to: (match) => {
+        path = match.replace('"{{', '').replace('}}"', '')
+        return `"${fs.readFileSync(path).toString()}"`
+      },
+    }
+
+    const results = replace.sync(options);
+  }
+  catch (error) {
+    console.error('Error occurred during metadata Interpolation:', error);
+  }
+
+  return params["metadata"]
 }
 
 async function cmd() {
@@ -144,10 +179,14 @@ async function cmd() {
       }
     }
 
-    if ("metadata" in request.params) {
+    if ("cf_metadata" in request.source && ("metadata_inline" in request.params || "metadata" in request.params)) {
+
+
+      metadata_file = prepareMatadata(request.params)
+
       cf.updateAppMetadata({
         name: request.params && request.params.name,
-        request_body_file: request.params.metadata
+        request_body_file: metadata_file
       })
     }
 
