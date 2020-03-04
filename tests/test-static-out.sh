@@ -8,7 +8,8 @@ cat <<JSON | ${DIR}/../out.js ${DIR}
     "username": "",
     "password": "",
     "organization": null,
-    "space": null
+    "space": null,
+    "feature_metadata": true
   },
   "params": {
     "name": "cf-zero-downtime-test",

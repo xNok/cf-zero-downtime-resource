@@ -39,7 +39,7 @@ For a list of available tags, [consult our Docker Hub repo](https://hub.docker.c
     - **client_secret**: _required_ client secret to authenticate
 - **organization** : _required_ the name of the organization to push to
 - **space** : _required_ the name of the space to push to
-- **cf_metadata**: (optional) if `true` collect the metadata from PCF and display them in Concouse metadata ([see](https://docs.pivotal.io/pivotalcf/2-6/adminguide/metadata.html))
+- **feature_metadata**: (optional) if `true` collect the metadata from PCF and display them in Concouse metadata ([see](https://docs.pivotal.io/pivotalcf/2-6/adminguide/metadata.html))
 - **skip_cert_check** : (not implemented yet) _optional_ (`true` or `false`) skip TLS certificate validation (default: `false`)
 - **verbose** : (not implemented yet) optional (`true` or `false`) make `cf` CLI more verbose using `CF_TRACE=true` (default: `false`)
 
@@ -110,6 +110,32 @@ jobs:
           gid: "1000"
 ```
 
+For uploading metadata to pcf, you can also specify as long as `feature_metadata: true`:
+
+- **metadata**: _optional_ path to a file containing the metadata to be pushed to pcf [see](https://docs.pivotal.io/pivotalcf/2-6/adminguide/metadata.html)
+- **metadata_inline**: _optional_ inline version of the metadata to added to pcf
+
+Note that **metadata** and **metadata_inline** will be merged together.
+
+Additionally, this feature support interpolation, for instance `{{path/to/file}}` will be replace by the content of the specified file.
+
+````
+jobs:
+- name: deploy
+  plan:
+  - get: my-app-package
+  - put: cf-zero-downtime
+    params:
+      name: my-app
+      manifest: my-app-package/manifest.yml
+      path: my-app-package/my-app.jar
+      metadata: metadata-static.json
+      metadata_inline:
+        metadata:
+          labels:
+            git-commit: {{my-app-package/.git/ref}}
+```
+
 #### Inline Manifest
 
 Instead of providing a path to the manifest file, you can inline the manifest directly in the pipeline.
@@ -133,3 +159,4 @@ jobs:
           health-check-type: http
           health-check-http-endpoint: /good
 ```
+````

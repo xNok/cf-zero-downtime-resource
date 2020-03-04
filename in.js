@@ -33,20 +33,25 @@ async function cmd() {
       ]
     }
 
-    if ("cf_metadata" in request.source) {
+    if ("feature_metadata" in request.source) {
       const appMetadata = cf.appMetadata({
         name: request.params && request.params.name,
         guid: request.version.guid
       })
 
       for (key in appMetadata.labels) {
-        result.metadata.push({ name: `label: ${key}`, value: appMetadata.labels[key] })
+        result.metadata.push({
+          name: `label: ${key}`,
+          value: appMetadata.labels[key]
+        })
       }
 
       for (key in appMetadata.annotations) {
-        result.metadata.push({ name: `annotation: ${key}` + key, value: appMetadata.annotations[key] })
+        result.metadata.push({
+          name: `annotation: ${key}` + key,
+          value: appMetadata.annotations[key]
+        })
       }
-
     }
 
     concourse.response(result)

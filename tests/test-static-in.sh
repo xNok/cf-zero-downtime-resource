@@ -13,7 +13,7 @@ cat <<JSON | ${DIR}/../in.js ${DIR}
     "password": "",
     "organization": null,
     "space": null,
-    "cf_metadata": true
+    "feature_metadata": true
   },
   "version": {
     "guid": "${guid}"

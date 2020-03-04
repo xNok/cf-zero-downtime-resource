@@ -61,13 +61,15 @@ function editManifest({ manifest, name, env = {}, docker_username }) {
 }
 
 function prepareMatadata(params) {
-
   if ("metadata_inline" in params) {
     // Merge both content
-    obj1 = "metadata" in params ? JSON.parse(fs.readFileSync(params["metadata"])) : {}
+    obj1 =
+      "metadata" in params
+        ? JSON.parse(fs.readFileSync(params["metadata"]))
+        : {}
     obj2 = params["metadata_inline"]
 
-    merged = merge(obj1, obj2);
+    merged = merge(obj1, obj2)
 
     params["metadata"] = "metadatafile.json"
     fs.writeFileSync(params["metadata"], JSON.stringify(merged))
@@ -78,16 +80,15 @@ function prepareMatadata(params) {
     const options = {
       files: params["metadata"],
       from: /"{{.+}}"/g,
-      to: (match) => {
-        path = match.replace('"{{', '').replace('}}"', '')
+      to: match => {
+        path = match.replace('"{{', "").replace('}}"', "")
         return `"${fs.readFileSync(path).toString()}"`
-      },
+      }
     }
 
-    const results = replace.sync(options);
-  }
-  catch (error) {
-    console.error('Error occurred during metadata Interpolation:', error);
+    const results = replace.sync(options)
+  } catch (error) {
+    console.error("Error occurred during metadata Interpolation:", error)
   }
 
   return params["metadata"]
@@ -179,9 +180,10 @@ async function cmd() {
       }
     }
 
-    if ("cf_metadata" in request.source && ("metadata_inline" in request.params || "metadata" in request.params)) {
-
-
+    if (
+      "feature_metadata" in request.source &&
+      ("metadata_inline" in request.params || "metadata" in request.params)
+    ) {
       metadata_file = prepareMatadata(request.params)
 
       cf.updateAppMetadata({
