@@ -147,7 +147,7 @@ jobs:
       metadata_inline:
         metadata:
           labels:
-            git-commit: {{my-app-package/.git/ref}}
+            git-commit: "{{my-app-package/.git/ref}}"
 ```
 
 #### Inline Manifest
