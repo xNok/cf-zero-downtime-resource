@@ -15,7 +15,7 @@ async function cmd() {
     cf.target(request.source)
 
     try {
-      const appInfo = cf.appInfo(request.params)
+      const appInfo = cf.appInfo({ name: request.source.app_name })
       concourse.response([appInfo.metadata])
     } catch (e) {
       concourse.response([])
