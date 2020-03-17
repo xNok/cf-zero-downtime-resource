@@ -43,6 +43,20 @@ For a list of available tags, [consult our Docker Hub repo](https://hub.docker.c
 - **skip_cert_check** : (not implemented yet) _optional_ (`true` or `false`) skip TLS certificate validation (default: `false`)
 - **verbose** : (not implemented yet) optional (`true` or `false`) make `cf` CLI more verbose using `CF_TRACE=true` (default: `false`)
 
+Exemple:
+
+```yaml
+- name: pcf
+  type: cf-zero-downtime-resource
+  icon: cloud
+  source:
+    api: ((pcf_api_url))
+    username: ((username))
+    password: ((password))
+    organization: ((organization))
+    space: ((space))
+```
+
 ## check
 
 Get the deployed app metadata. Only one version is ever returned.
@@ -119,7 +133,7 @@ Note that **metadata** and **metadata_inline** will be merged together.
 
 Additionally, this feature support interpolation, for instance `{{path/to/file}}` will be replace by the content of the specified file.
 
-````
+```
 jobs:
 - name: deploy
   plan:
@@ -159,4 +173,3 @@ jobs:
           health-check-type: http
           health-check-http-endpoint: /good
 ```
-````
