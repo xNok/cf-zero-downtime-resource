@@ -82,7 +82,7 @@ function prepareMetadata(params) {
       from: /"{{.+?}}"/g,
       to: match => {
         path = match.replace('"{{', "").replace('}}"', "")
-        return `"${fs.readFileSync(path).toString()}"`
+        return `"${fs.readFileSync(path).toString().split(/\n/g)}"`
       }
     }
 
