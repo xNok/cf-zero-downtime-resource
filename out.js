@@ -16,9 +16,9 @@ function validateManifest(manifest) {
   if (manifest.applications.length !== 1) {
     throw new Error(
       `Application manifest must have one application configuration under the applications key. ${
-        manifest.applications.length === 0
-          ? "None exist!"
-          : "Multiple are defined!"
+      manifest.applications.length === 0
+        ? "None exist!"
+        : "Multiple are defined!"
       }`
     )
   }
@@ -79,7 +79,7 @@ function prepareMatadata(params) {
   try {
     const options = {
       files: params["metadata"],
-      from: /"{{.+}}"/g,
+      from: /"{{.+?}}"/g,
       to: match => {
         path = match.replace('"{{', "").replace('}}"', "")
         return `"${fs.readFileSync(path).toString()}"`
