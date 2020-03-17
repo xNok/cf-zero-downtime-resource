@@ -1,4 +1,5 @@
 const os = require("os")
+const fs = require("fs")
 const child_process = require("child_process")
 
 exports.auth = source => {
@@ -114,7 +115,9 @@ exports.updateAppMetadata = ({ name, guid, request_body_file }) => {
   }
 
   try {
-    console.log("Uploading metadatas")
+    console.log("\nUploading metadatas ...")
+
+    console.log(fs.readFileSync(request_body_file, "utf8"))
 
     child_process.execFileSync("cf", ["curl", `v3/apps/${guid}`, "-X", "PATCH", "-d", `@${request_body_file}`])
 
