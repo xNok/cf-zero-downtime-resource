@@ -60,7 +60,7 @@ function editManifest({ manifest, name, env = {}, docker_username }) {
   }
 }
 
-function prepareMatadata(params) {
+function prepareMetadata(params) {
   if ("metadata_inline" in params) {
     // Merge both content
     obj1 =
@@ -184,7 +184,7 @@ async function cmd() {
       "feature_metadata" in request.source &&
       ("metadata_inline" in request.params || "metadata" in request.params)
     ) {
-      metadata_file = prepareMatadata(request.params)
+      metadata_file = prepareMetadata(request.params)
 
       cf.updateAppMetadata({
         name: request.params && request.params.name,
